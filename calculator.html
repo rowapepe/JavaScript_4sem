@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="script.js"></script> 
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="header-container">
+            <a href="calculator.html" class="logo-link">
+                <span class="logo-link"><img src="https://www.mos.ru/front/markup/header-footer/img/logo.svg"</span>
+            </a>
+            <nav class="header-nav">
+                <a href="https://github.com/" class="nav-link">GitHub</a>
+                <div class="services-menu">
+                    <span class="nav-link services-trigger">Услуги</span>
+                    <div class="services-dropdown">
+                        <a href="#" class="services-link">Оплата ЖКУ</a>
+                        <a href="#" class="services-link">Запись к врачу</a>
+                        <a href="#" class="services-link">Мои документы</a>
+                    </div>
+                </div>
+                <a href="profile.html" class="nav-link">Профиль</a>
+            </nav>
+            <div class="header-actions">
+                <input id="theme-toggle" class="theme-toggle-input" type="checkbox" aria-label="Сменить тему">
+                <label for="theme-toggle" class="theme-toggle">Темная тема</label>
+                <details class="author-details">
+                    <summary>Автор</summary>
+                    <div class="author-dropdown">
+                        <p>ФИО: Верзаков Н.В.</p>
+                        <p>Группа: ИУ5-44Б</p>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </header>
+    <div class="wrapper">
+        <div class="purpose-section">
+            <h3>Цель лабораторной работы:</h3>
+            <p>Целью данной работы является <mark>знакомство</mark> с технологиями <mark>HTML</mark> и <mark>CSS</mark>
+                для создания интерактивных веб-приложений.</p>
+        </div>
+
+        <div class="calculator">
+            <div id="result" class="result">
+                0
+            </div>
+
+            <div class="buttons-container">
+                <div class="button-row">
+                    <button id="btn_op_clear" class="my-btn secondary">C</button>
+                    <button id="btn_op_sign" class="my-btn secondary">&PlusMinus;</button>
+                    <button id="btn_op_percent" class="my-btn secondary">&percnt;</button>
+                    <button id="btn_op_div" class="my-btn secondary">/</button>
+                </div>
+
+                <div class="button-row">
+                    <button id="btn_digit_7" class="my-btn">7</button>
+                    <button id="btn_digit_8" class="my-btn">8</button>
+                    <button id="btn_digit_9" class="my-btn">9</button>
+                    <button id="btn_op_mult" class="my-btn primary">x</button>
+                </div>
+
+                <div class="button-row">
+                    <button id="btn_digit_4" class="my-btn">4</button>
+                    <button id="btn_digit_5" class="my-btn">5</button>
+                    <button id="btn_digit_6" class="my-btn">6</button>
+                    <button id="btn_op_minus" class="my-btn primary">-</button>
+                </div>
+
+                <div class="button-row">
+                    <button id="btn_digit_1" class="my-btn">1</button>
+                    <button id="btn_digit_2" class="my-btn">2</button>
+                    <button id="btn_digit_3" class="my-btn">3</button>
+                    <button id="btn_op_plus" class="my-btn primary">+</button>
+                </div>
+
+                <div class="button-row">
+                    <button id="btn_digit_0" class="my-btn">0</button>
+                    <button id="btn_digit_dot" class="my-btn">.</button>
+                    <button id="btn_op_equal" class="my-btn primary execute">=</button>
+                </div>
+            </div>
+        </div>
+        <div class="author">
+            <p>ЛР выполнена Верзаковым Н.В.</p>
+        </div>
+    </div>
+</body>
+
+</html>
