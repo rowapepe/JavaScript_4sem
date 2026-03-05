@@ -24,10 +24,8 @@ body {
     width: 100%;
     background: #ffffff;
     border-bottom: 1px solid #e0e0e0;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
     position: sticky;
     top: 0;
-    z-index: 1000;
 }
 
 .header-container {
@@ -87,6 +85,17 @@ body {
 
 .services-trigger {
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.services-trigger svg {
+    transform-origin: center;
+}
+
+.services-menu:hover .services-trigger svg {
+    transform: rotate(180deg);
 }
 
 .services-dropdown {
@@ -114,6 +123,7 @@ body {
     text-decoration: none;
     color: #333333;
     font-size: 14px;
+    cursor: not-allowed;
 }
 
 .services-link:hover {
@@ -127,33 +137,6 @@ body {
     gap: 16px;
     justify-self: end;
     position: relative;
-}
-
-.theme-toggle-input {
-    position: absolute;
-    opacity: 0;
-    pointer-events: none;
-}
-
-.theme-toggle {
-    background: #b7b7b735;
-    border-radius: 6px;
-    padding: 0;
-    position: relative;
-    color: #4b4b4b;
-    padding: 8px 12px;
-    font-size: 16px;
-    cursor: pointer;
-    user-select: none;
-    font-weight: 600;
-    color: #333333;
-    list-style: none;
-    padding: 8px 12px;
-}
-
-.theme-toggle:hover {
-    color: #d8c7b2;
-    border-radius: 6px;
 }
 
 .wrapper {
@@ -278,11 +261,17 @@ body {
 }
 
 .my-btn.execute { 
-    width: 132px;          
+    width: 132px;    
     border-radius: 8px;   
 }
 
 .buttons-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-pad {
     display: flex;
     flex-direction: column;
 }
@@ -308,9 +297,10 @@ body {
     border: 1px solid #e0e0e0;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+    justify-content: flex-start;
+    white-space: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 .author-details {
@@ -329,6 +319,9 @@ body {
     color: #333333;
     list-style: none;
     padding: 8px 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .author-details summary:hover {
@@ -346,7 +339,6 @@ body {
     border-radius: 8px;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
     padding: 10px 12px;
-    z-index: 1100;
 }
 
 .author-dropdown p {
@@ -368,105 +360,10 @@ body {
     border: 2px solid #e0e0e0;
 }
 
-body:has(.theme-toggle-input:checked) {
-    background-image: none;
-    background-color: #1f2227;
-    color: #e4e7eb;
-}
-
-body:has(.theme-toggle-input:checked) .site-header,
-body:has(.theme-toggle-input:checked) .services-dropdown,
-body:has(.theme-toggle-input:checked) .author-dropdown {
-    background: #272b31;
-    border-color: #3a4048;
-}
-
-body:has(.theme-toggle-input:checked) .nav-link,
-body:has(.theme-toggle-input:checked) .services-link,
-body:has(.theme-toggle-input:checked) .author-details summary,
-body:has(.theme-toggle-input:checked) .purpose-section h3,
-body:has(.theme-toggle-input:checked) .result {
-    color: #e4e7eb;
-}
-
-body:has(.theme-toggle-input:checked) .services-link:hover,
-body:has(.theme-toggle-input:checked) .my-btn:hover {
-    color: #ffffff;
-}
-
-body:has(.theme-toggle-input:checked) .purpose-section,
-body:has(.theme-toggle-input:checked) .calculator,
-body:has(.theme-toggle-input:checked) .result,
-body:has(.theme-toggle-input:checked) .author-details {
-    background: #2d333b;
-    border-color: #414955;
-}
-
-body:has(.theme-toggle-input:checked) .purpose-section p,
-body:has(.theme-toggle-input:checked) .author p,
-body:has(.theme-toggle-input:checked) .author-dropdown p {
-    color: #c7ced8;
-}
-
-body:has(.theme-toggle-input:checked) .profile-image img {
-    border-color: #414955;
-}
-
-body:has(.theme-toggle-input:checked) .my-btn {
-    background: #4b4138;
-    border-color: #5f5246;
-    color: #f0f3f7;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
-}
-
-body:has(.theme-toggle-input:checked) .my-btn:active {
-    background: #343a43;
-}
-
-body:has(.theme-toggle-input:checked) .my-btn.primary {
-    background: #c18b5f;
-    border-color: #aa7750;
-    color: #0e1318;
-}
-
-body:has(.theme-toggle-input:checked) .my-btn.primary:hover {
-    background: #d39a69;
-    border-color: #d39a69;
-}
-
-body:has(.theme-toggle-input:checked) .my-btn.secondary {
-    background: #5f5246;
-    border-color: #746354;
-    color: #ecf0f5;
-}   
-
-body:has(.theme-toggle-input:checked) .services-link:hover,
-body:has(.theme-toggle-input:checked) .my-btn:hover,
-body:has(.theme-toggle-input:checked) .author-details summary:hover {
-    background: #4b4138;
-    border-color: #aa7750;
-}
-
-body:has(.theme-toggle-input:checked) .theme-toggle {
-    background: #2d333b;
-    border-color: #414955;
-    color: #e4e7eb;
-    font-weight: 600;
-}
-
-body:has(.theme-toggle-input:checked) .theme-toggle:hover {
-    background: #4b4138;
-    border-color: #aa7750;
-}
-
 @media (max-width: 600px) {
     .header-container {
         padding: 0 16px;
         height: 56px;
-    }
-    
-    .header-nav {
-        display: none;
     }
     
     .logo-text {
@@ -474,17 +371,21 @@ body:has(.theme-toggle-input:checked) .theme-toggle:hover {
     }
     
     .calculator {
-        padding: 16px;
+        width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
     }
-    
+
     .my-btn {
-        width: 50px;
-        height: 50px;
+        flex: none;
+        width: 56px;
+        height: 56px;
+        margin-right: 8px;
         font-size: 1.2rem;
     }
-    
+
     .my-btn.execute {
-        width: 108px;
+        width: 120px;
     }
     
     .result {
