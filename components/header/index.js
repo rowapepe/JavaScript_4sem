@@ -13,15 +13,17 @@ export class HeaderComponent {
                 });
         }
 
-        document
-            .getElementById("add-card")
-            ?.addEventListener("click", (e) => {
-                e.preventDefault();
-                if (onAdd) onAdd(e);
-            });
+        if (onAdd) {
+            document
+                .getElementById("add-card")
+                ?.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    onAdd(e);
+                });
+        }
     }
 
-    getHTML() {
+    getHTML({ showAddButton = true } = {}) {
         return `
             <header class="site-header m-3">
                 <div class="container">
@@ -31,7 +33,11 @@ export class HeaderComponent {
                                 <img src="https://www.mos.ru/front/markup/header-footer/img/logo.svg" alt="Логотип">
                             </span>
                         </a>
-                        <button id="add-card" class="btn btn-add ms-3" style="background-color: #c4c8d0; color: #13151A; border-color: #c4c8d0;">Добавить карточку</button>
+                        ${
+                            showAddButton
+                                ? `<button id="add-card" class="btn btn-add ms-3" style="background-color: #c4c8d0; color: #13151A; border-color: #c4c8d0;">Добавить карточку</button>`
+                                : ""
+                        }
                     </div>
                 </div>
             </header>
@@ -39,7 +45,7 @@ export class HeaderComponent {
     }
 
     render(onHome, onAdd) {
-        const html = this.getHTML();
+        const html = this.getHTML({ showAddButton: Boolean(onAdd) });
         this.parent.insertAdjacentHTML('beforeend', html);
         this.addListeners(onHome, onAdd);
     }

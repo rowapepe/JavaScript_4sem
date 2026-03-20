@@ -1,8 +1,8 @@
-import { BackButtonComponent } from "../../components/back-button/index.js";
 import { HeaderComponent } from "../../components/header/index.js";
 import { ProductComponent } from "../../components/product/index.js";
 import { getCardById } from "../../data/cards.js";
 import { MainPage } from "../main/index.js";
+import { ProductExtendedPage } from "../product-extended/index.js";
 
 export class ProductPage {
     constructor(parent, id) {
@@ -24,16 +24,16 @@ export class ProductPage {
 
     getHTML() {
         return `
-            <div id="header"></div>
+            <div id="header" style="margin-top: 21px;"></div>
             <div class="container">
                 <div id="product-page"></div>
             </div>
         `;
     }
 
-    clickBack() {
-        const mainPage = new MainPage(this.parent);
-        mainPage.render();
+    clickDetails() {
+        const extendedPage = new ProductExtendedPage(this.parent, this.id);
+        extendedPage.render();
     }
 
     clickHome() {
@@ -49,12 +49,12 @@ export class ProductPage {
         const header = new HeaderComponent(this.headerRoot);
         header.render(this.clickHome.bind(this));
 
-        const backButton = new BackButtonComponent(this.pageRoot);
-        backButton.render(this.clickBack.bind(this));
-
         const data = this.getData();
         const product = new ProductComponent(this.pageRoot);
-        const productData = data?.product ?? data?.card ?? data;
-        if (productData) product.render(productData);
+        const rawProductData = data?.product ?? data?.card ?? data;
+        if (rawProductData) {
+            const productData = { id: this.id, productId: this.id, ...rawProductData };
+            product.render(productData, this.clickDetails.bind(this));
+        }
     }
 }

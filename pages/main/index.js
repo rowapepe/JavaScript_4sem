@@ -20,17 +20,12 @@ export class MainPage {
         return document.getElementById('header');
     }
 
-    get toastRoot() {
-        return document.getElementById('toast-container');
-    }
-
     getHTML() {
         return `
             <div id="header"></div>
             <div class="container">
                 <div id="main-page" class="d-flex flex-wrap gap-3"></div>
             </div>
-            <div id="toast-container" class="toast-container position-fixed top-0 end-0 p-3"></div>
         `;
     }
 
