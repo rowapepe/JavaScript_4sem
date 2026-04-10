@@ -1,5 +1,5 @@
-import { HeaderComponent } from "../../components/header/index.js";
-import { ProductExtendedComponent } from "../../components/product-extended/index.js";
+import { renderHeader } from "../../components/header/index.js";
+import { renderProductExtended } from "../../components/product-extended/index.js";
 import { MainPage } from "../main/index.js";
 import { ProductPage } from "../product/index.js";
 
@@ -41,10 +41,7 @@ export class ProductExtendedPage {
         const html = this.getHTML();
         this.parent.insertAdjacentHTML("beforeend", html);
 
-        const header = new HeaderComponent(this.headerRoot);
-        header.render(this.clickHome.bind(this));
-
-        const extended = new ProductExtendedComponent(this.pageRoot);
-        extended.render(this.clickBack.bind(this), this.clickHome.bind(this));
+        renderHeader(this.headerRoot, this.clickHome.bind(this));
+        renderProductExtended(this.pageRoot, this.clickBack.bind(this), this.clickHome.bind(this));
     }
 }

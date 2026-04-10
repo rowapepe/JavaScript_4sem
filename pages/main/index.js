@@ -1,5 +1,5 @@
-import { HeaderComponent } from "../../components/header/index.js";
-import { ProductCardComponent } from "../../components/product-card/index.js";
+import { renderHeader } from "../../components/header/index.js";
+import { renderProductCard } from "../../components/product-card/index.js";
 import { ProductPage } from "../product/index.js";
 import { cardsData } from "../../data/cards.js";
 
@@ -41,14 +41,12 @@ export class MainPage {
         const firstItem = data?.[0];
         if (!firstItem) return;
 
-        const existingIds = Array.from(this.pageRoot.querySelectorAll(".card[data-id]"))
-            .map((el) => Number(el.dataset.id))
-            .filter((value) => Number.isFinite(value));
+        const existingIds = Array.from(this.pageRoot.querySelectorAll(".card[data-id]")).map((el) => Number(el.dataset.id)).filter((value) => Number.isFinite(value));
         const nextDomId = (existingIds.length ? Math.max(...existingIds) : 0) + 1;
 
-        const productCard = new ProductCardComponent(this.pageRoot);
         const cardData = firstItem.card ?? firstItem;
-        productCard.render(
+        renderProductCard(
+            this.pageRoot,
             { id: nextDomId, productId: firstItem.id, ...cardData },
             this.clickCard.bind(this),
         );
@@ -64,14 +62,9 @@ export class MainPage {
         const html = this.getHTML();
         this.parent.insertAdjacentHTML('beforeend', html);
 
-        const header = new HeaderComponent(this.headerRoot);
-        header.render(this.clickHome.bind(this), this.clickAddCard.bind(this));
+        renderHeader(this.headerRoot, this.clickHome.bind(this), this.clickAddCard.bind(this));
 
         const data = this.getData();
-        data.forEach((item) => {
-            const productCard = new ProductCardComponent(this.pageRoot);
-            const cardData = item.card ?? item;
-            productCard.render({ id: item.id, ...cardData }, this.clickCard.bind(this));
-        });
+        data.forEach((item) => {const cardData = item.card ?? item; renderProductCard(this.pageRoot, { id: item.id, ...cardData }, this.clickCard.bind(this));});
     }
 }

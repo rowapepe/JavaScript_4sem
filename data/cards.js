@@ -7,9 +7,9 @@ export const cardsData = [
             text: "Актуальные новости на сегодня",
         },
         product: {
-            src: "https://www.mos.ru/upload/newsfeed/news/de33648171b518875a25a01be5dceca3/post_elektrodepo_Troitskoe_Mishin.jpg",
-            title: "Транспорт",
-            text: "Сергей Собянин: Началось строительство крупнейшего в России электродепо",
+            src: "assets/news.png",
+            title: "Лента новостей",
+            text: "Во вкладке собраны все актуальные новости по направлениям",
         },
     },
     {
