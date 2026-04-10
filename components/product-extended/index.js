@@ -16,18 +16,12 @@ function getHTML() {
 function addListeners(onBack, onHome) {
     const backButton = document.getElementById("product-extended-back");
     if (backButton && onBack) {
-        backButton.addEventListener("click", (e) => {
-            e.preventDefault();
-            onBack(e);
-        });
+        backButton.addEventListener("click", (e) => {e.preventDefault(); onBack(e);});
     }
 
     const homeButton = document.getElementById("product-extended-home");
     if (homeButton && onHome) {
-        homeButton.addEventListener("click", (e) => {
-            e.preventDefault();
-            onHome(e);
-        });
+        homeButton.addEventListener("click", (e) => {e.preventDefault(); onHome(e);});
     }
 }
 

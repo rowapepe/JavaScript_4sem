@@ -65,6 +65,6 @@ export class MainPage {
         renderHeader(this.headerRoot, this.clickHome.bind(this), this.clickAddCard.bind(this));
 
         const data = this.getData();
-        data.forEach((item) => {const cardData = item.card ?? item; renderProductCard(this.pageRoot, { id: item.id, ...cardData }, this.clickCard.bind(this));});
+        data.forEach((item) => { const cardData = item.card ?? item; renderProductCard(this.pageRoot, { id: item.id, ...cardData }, this.clickCard.bind(this)); });
     }
 }

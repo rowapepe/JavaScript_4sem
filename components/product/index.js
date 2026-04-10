@@ -9,7 +9,7 @@ function getHTML(data) {
                                 ${tag}
                             </span>
                         `,
-                    ).join("")}
+        ).join("")}
             </div>
         `
         : "";
@@ -25,15 +25,11 @@ function getHTML(data) {
                         <h5 class="card-title">${data.title}</h5>
                         <p class="card-text">${data.text}</p>
                         ${tagsHTML}
-                        ${
-                            showDetailsButton
-                                ? `
+                        ${showDetailsButton ? `
                                     <div class="mt-auto d-flex justify-content-between gap-2">
                                         <button class="btn btn-primary" id="click-card-${data.id}" data-id="${data.id}" data-product-id="${data.productId ?? data.id}" style="background-color: #c4c8d0; color: #13151A; border-color: #c4c8d0;">Подробнее</button>
                                     </div>
-                                `
-                                : ""
-                        }
+                                ` : ""}
                     </div>
                 </div>
             </div>
