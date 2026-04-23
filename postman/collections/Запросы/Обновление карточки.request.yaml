@@ -1,0 +1,11 @@
+$kind: http-request
+url: http://localhost:3000/stocks/3
+method: PATCH
+body:
+  type: json
+  content: |-
+    {
+        "title":"Обновленное название",
+        "text":"Обновленное описание"
+    }
+order: 4016800310623843

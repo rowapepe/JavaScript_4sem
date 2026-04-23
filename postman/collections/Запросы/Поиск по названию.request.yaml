@@ -1,0 +1,14 @@
+$kind: http-request
+url: http://localhost:3000/stocks?title=Акция 1
+method: GET
+queryParams:
+  title: Акция 1
+body:
+  type: json
+  content: |-
+    {
+        "src":"https://example.com/3.jpg",
+        "title":"Новая акция",
+        "text":"Такой новой акции вы еще не видели"
+    }
+order: 3255935476442415
