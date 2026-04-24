@@ -1,0 +1,4 @@
+$kind: http-request
+url: http://localhost:3000/stocks/1
+method: OPTIONS
+order: 4495866950657502

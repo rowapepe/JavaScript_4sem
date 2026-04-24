@@ -1,0 +1,12 @@
+$kind: http-request
+url: http://localhost:3000/stocks/1
+method: PUT
+body:
+  type: json
+  content: |-
+    {
+        "src":"https://example4.com/img",
+        "title":"New",
+        "text":"New"
+    }
+order: 4482921714334754

@@ -1,0 +1,4 @@
+$kind: http-request
+url: http://localhost:3000/stocks/1
+method: HEAD
+order: 4501505467615309
