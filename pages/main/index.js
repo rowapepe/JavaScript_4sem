@@ -1,15 +1,13 @@
 import { HeaderComponent } from "../../components/header/index.js";
 import { ProductCardComponent } from "../../components/product-card/index.js";
+import { ajax } from "../../modules/ajax.js";
+import { stockUrls } from "../../modules/stockUrls.js";
+import { ProductFormPage } from "../product-form/index.js";
 import { ProductPage } from "../product/index.js";
-import { cardsData } from "../../data/cards.js";
 
 export class MainPage {
     constructor(parent) {
         this.parent = parent;
-    }
-
-    getData() {
-        return cardsData;
     }
 
     get pageRoot() {
@@ -36,28 +34,65 @@ export class MainPage {
         productPage.render();
     }
 
+    clickEditCard(e) {
+        const cardId = e.currentTarget.dataset.id;
+        const productFormPage = new ProductFormPage(this.parent, cardId);
+        productFormPage.render();
+    }
+
+    clickDeleteCard(e) {
+        const cardId = e.currentTarget.closest(".card")?.dataset.id;
+        if (!cardId) {
+            return;
+        }
+
+        ajax.delete(stockUrls.removeStockById(cardId), (data, status) => {
+            if (status !== 204) {
+                alert(data?.error ?? "Не удалось удалить карточку.");
+                return;
+            }
+
+            this.getData();
+        });
+    }
+
+    getData() {
+        ajax.get(stockUrls.getStocks(), (data, status) => {
+            if (status !== 200 || !Array.isArray(data)) {
+                this.pageRoot.innerHTML = "<p>Не удалось загрузить карточки.</p>";
+                return;
+            }
+
+            this.renderData(data);
+        });
+    }
+
+    renderData(items) {
+        this.pageRoot.innerHTML = '';
+
+        items.forEach((item) => {
+            const productCard = new ProductCardComponent(this.pageRoot);
+            const cardData = item.card ?? item;
+            productCard.render(
+                { id: item.id, ...cardData },
+                {
+                    onOpen: this.clickCard.bind(this),
+                    onEdit: this.clickEditCard.bind(this),
+                    onDelete: this.clickDeleteCard.bind(this),
+                },
+            );
+        });
+    }
+
     clickAddCard() {
-        const data = this.getData();
-        const firstItem = data?.[0];
-        if (!firstItem) return;
-
-        const existingIds = Array.from(this.pageRoot.querySelectorAll(".card[data-id]"))
-            .map((el) => Number(el.dataset.id))
-            .filter((value) => Number.isFinite(value));
-        const nextDomId = (existingIds.length ? Math.max(...existingIds) : 0) + 1;
-
-        const productCard = new ProductCardComponent(this.pageRoot);
-        const cardData = firstItem.card ?? firstItem;
-        productCard.render(
-            { id: nextDomId, productId: firstItem.id, ...cardData },
-            this.clickCard.bind(this),
-        );
+        const productFormPage = new ProductFormPage(this.parent);
+        productFormPage.render();
     }
 
     clickHome() {
         const mainPage = new MainPage(this.parent);
         mainPage.render();
-    }
+    }w
 
     render() {
         this.parent.innerHTML = '';
@@ -67,11 +102,6 @@ export class MainPage {
         const header = new HeaderComponent(this.headerRoot);
         header.render(this.clickHome.bind(this), this.clickAddCard.bind(this));
 
-        const data = this.getData();
-        data.forEach((item) => {
-            const productCard = new ProductCardComponent(this.pageRoot);
-            const cardData = item.card ?? item;
-            productCard.render({ id: item.id, ...cardData }, this.clickCard.bind(this));
-        });
+        this.getData();
     }
 }

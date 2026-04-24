@@ -14,8 +14,9 @@ export class ProductComponent {
                         <div class="card-body">
                             <h5 class="card-title">${data.title}</h5>
                             <p class="card-text">${data.text}</p>
-                            <div class="mt-auto d-flex justify-content-between gap-2">
+                            <div class="mt-auto d-flex flex-wrap gap-2">
                                 <button class="btn btn-primary" id="click-card-${data.id}" data-id="${data.id}" data-product-id="${data.productId ?? data.id}" style="background-color: #c4c8d0; color: #13151A; border-color: #c4c8d0;">Подробнее</button>
+                                <button class="btn btn-secondary" id="edit-card-${data.id}" data-id="${data.id}" style="background-color: #dbe5f2; color: #13151A; border-color: #dbe5f2;">Редактировать</button>
                             </div>
                         </div>
                     </div>
@@ -24,19 +25,32 @@ export class ProductComponent {
         `;
     }
 
-    addListeners(data, onDetails) {
+    addListeners(data, options = {}) {
+        const handlers =
+            typeof options === "function"
+                ? { onDetails: options }
+                : options;
+
         const detailsButton = document.getElementById(`click-card-${data.id}`);
-        if (detailsButton && onDetails) {
+        if (detailsButton && handlers.onDetails) {
             detailsButton.addEventListener("click", (e) => {
                 e.preventDefault();
-                onDetails(e);
+                handlers.onDetails(e);
+            });
+        }
+
+        const editButton = document.getElementById(`edit-card-${data.id}`);
+        if (editButton && handlers.onEdit) {
+            editButton.addEventListener("click", (e) => {
+                e.preventDefault();
+                handlers.onEdit(e);
             });
         }
     }
 
-    render(data, onDetails) {
+    render(data, options) {
         const html = this.getHTML(data);
         this.parent.insertAdjacentHTML('beforeend', html);
-        this.addListeners(data, onDetails);
+        this.addListeners(data, options);
     }
 }

@@ -3,8 +3,14 @@ class StockUrls {
         this.baseUrl = 'http://localhost:3000';
     }
 
-    getStocks() {
-        return `${this.baseUrl}/stocks`;
+    getStocks(title = '') {
+        const url = new URL(`${this.baseUrl}/stocks`);
+
+        if (title) {
+            url.searchParams.set('title', title);
+        }
+
+        return url.toString();
     }
 
     getStockById(id) {
@@ -15,11 +21,11 @@ class StockUrls {
         return `${this.baseUrl}/stocks`;
     }
 
-    removeStockById() {
+    removeStockById(id) {
         return `${this.baseUrl}/stocks/${id}`;
     }
 
-    updateStockById() {
+    updateStockById(id) {
         return `${this.baseUrl}/stocks/${id}`;
     }
 }
