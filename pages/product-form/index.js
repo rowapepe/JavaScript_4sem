@@ -51,8 +51,15 @@ export class ProductFormPage {
     }
 
     submitForm(values) {
-        const callback = (data) => {
-            const productPage = new ProductPage(this.parent, data.id ?? this.id);
+        const callback = (data, status) => {
+            const successStatuses = this.isEditMode ? [200] : [201];
+            if (!successStatuses.includes(status) || !data) {
+                this.errorMessage = data?.error ?? "Не удалось сохранить карточку.";
+                this.renderForm(values);
+                return;
+            }
+
+            const productPage = new ProductPage(this.parent, data.id);
             productPage.render();
         };
 

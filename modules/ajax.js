@@ -5,15 +5,7 @@ class Ajax {
      * @param {function} callback - Функция обратного вызова (data, status)
      */
     get(url, callback) {
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', url);
-        xhr.send();
-
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4) {
-                this._handleResponse(xhr, callback);
-            }
-        };
+        this._request(url, { method: "GET" }, callback);
     }
 
     /**
@@ -23,16 +15,17 @@ class Ajax {
      * @param {function} callback - Функция обратного вызова (data, status)
      */
     post(url, data, callback) {
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', url);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.send(JSON.stringify(data));
-
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4) {
-                this._handleResponse(xhr, callback);
-            }
-        };
+        this._request(
+            url,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            },
+            callback,
+        );
     }
 
     /**
@@ -42,16 +35,17 @@ class Ajax {
      * @param {function} callback - Функция обратного вызова (data, status)
      */
     patch(url, data, callback) {
-        const xhr = new XMLHttpRequest();
-        xhr.open('PATCH', url);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.send(JSON.stringify(data));
-
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4) {
-                this._handleResponse(xhr, callback);
-            }
-        };
+        this._request(
+            url,
+            {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            },
+            callback,
+        );
     }
 
     /**
@@ -60,29 +54,32 @@ class Ajax {
      * @param {function} callback - Функция обратного вызова (data, status)
      */
     delete(url, callback) {
-        const xhr = new XMLHttpRequest();
-        xhr.open('DELETE', url);
-        xhr.send();
-
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4) {
-                this._handleResponse(xhr, callback);
-            }
-        };
+        this._request(url, { method: "DELETE" }, callback);
     }
 
-    /**
-     * Обработчик ответа (приватный метод)
-     * @param {XMLHttpRequest} xhr - Объект запроса
-     * @param {function} callback - Функция обратного вызова
-     */
-    _handleResponse(xhr, callback) {
+    async _request(url, options, callback) {
         try {
-            const data = xhr.responseText ? JSON.parse(xhr.responseText) : null;
-            callback(data, xhr.status);
+            const response = await fetch(url, options);
+            const data = await this._parseResponse(response);
+            callback(data, response.status);
         } catch (e) {
-            console.error('Ошибка парсинга JSON:', e);
-            callback(null, xhr.status);
+            console.error("Ошибка запроса:", e);
+            callback({ error: "Не удалось подключиться к серверу." }, 0);
+        }
+    }
+
+    async _parseResponse(response) {
+        const text = await response.text();
+
+        if (!text) {
+            return null;
+        }
+
+        try {
+            return JSON.parse(text);
+        } catch (e) {
+            console.error("Ошибка парсинга JSON:", e);
+            return null;
         }
     }
 }
